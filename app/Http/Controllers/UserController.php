@@ -56,8 +56,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id);
-        
+        if (!$user = User::find($id)) {
+            return back();
+        }
+
         return view('users.show', compact('user'));
     }
 
@@ -66,7 +68,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        if (!$user = User::find($id)) {
+            return back();
+        }
+
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -74,7 +80,26 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (!$user = User::find($id)) {
+            return back();
+        }
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:6',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarPath = $avatar->store('avatars', 'public');
+            $validatedData['avatar'] = $avatarPath;
+        }
+
+        $user->update($validatedData);
+
+        return redirect()->route('home');
     }
 
     /**

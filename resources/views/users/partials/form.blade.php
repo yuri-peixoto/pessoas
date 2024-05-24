@@ -28,4 +28,4 @@
         <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
     </div>
 
-    <button type="submit">Cadastrar</button>
+    <button type="submit" class="mt-4 shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">Cadastrar</button>
