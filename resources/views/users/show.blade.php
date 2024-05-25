@@ -17,13 +17,13 @@
         <img src="{{ asset('storage/'.$user->avatar) }}" alt="{{ $user->name }}" class="w-32 h-32 object-cover rounded-full">
     @endif
 
-    {{-- <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="mt-4 flex justify-between">
+    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="mt-4 flex justify-between">
         @csrf
         @method('DELETE')
 
         <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded">Excluir</button>
 
         <a href="{{ route('home') }}" class="text-blue-500">Voltar</a>
-    </form> --}}
+    </form>
 </div>
 @endsection

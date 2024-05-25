@@ -16,15 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
-            SupportRepositoryInterface::class,
-            SupportEloquentORM::class
-        );
-
-        $this->app->bind(
-            ReplyRepositoryInterface::class,
-            ReplySupportRepository::class
-        );;
+        //
     }
 
     /**
@@ -32,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Support::observe(SupportObserver::class);
+        //
     }
 }

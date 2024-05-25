@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('users.update', $user->name) }}" method="POST">
+<form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
     @method('PUT')
     @include('users.partials.form', compact('user'))
 </form>

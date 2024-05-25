@@ -3,21 +3,21 @@
     <!-- Name -->
     <div>
         <x-input-label for="name" :value="__('Nome')" />
-        <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name" />
+        <x-text-input id="name" name="name" type="text" value="{{ $user->name ?? old('name') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required autofocus autocomplete="name" />
         <x-input-error :messages="$errors->get('name')" class="mt-2" />
     </div>
 
     <!-- Email -->
     <div class="mt-4">
         <x-input-label for="email" :value="__('E-mail')" />
-        <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" required autocomplete="email" />
+        <x-text-input id="email" name="email" type="email" value="{{ $user->email ?? old('email') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required autocomplete="email" />
         <x-input-error :messages="$errors->get('email')" class="mt-2" />
     </div>
 
     <!-- Password -->
     <div class="mt-4">
         <x-input-label for="password" :value="__('Password')" />
-        <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" required autocomplete="new-password" />
+        <x-text-input id="password" name="password" type="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required autocomplete="new-password" />
         <x-input-error :messages="$errors->get('password')" class="mt-2" />
     </div>
 

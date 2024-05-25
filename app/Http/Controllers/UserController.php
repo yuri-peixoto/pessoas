@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -91,10 +92,18 @@ class UserController extends Controller
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        } else {
+            unset($validatedData['password']);
+        }
+
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $avatarPath = $avatar->store('avatars', 'public');
             $validatedData['avatar'] = $avatarPath;
+        } else {
+            unset($validatedData['avatar']);
         }
 
         $user->update($validatedData);
@@ -107,6 +116,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (!$user = User::find($id)) {
+            return back();
+        }
+
+        $user->delete();
+
+        return redirect()->route('home');
     }
 }
