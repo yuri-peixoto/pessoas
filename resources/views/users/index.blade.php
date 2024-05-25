@@ -48,7 +48,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                        @foreach ($users as $user)
+                        @forelse ($users as $user)
                         <tr>
                             <td class="px-4 py-2 text-sm font-medium whitespace-nowrap dark:text-white">
                                 @if ($user->avatar)
@@ -75,7 +75,13 @@
                                 </a>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-2 text-sm font-medium whitespace-nowrap text-center text-gray-500 dark:text-gray-400">
+                                Nenhum registro encontrado
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
