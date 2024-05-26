@@ -3,14 +3,14 @@
     <!-- Name -->
     <div>
         <x-input-label for="name" :value="__('Nome')" />
-        <x-text-input id="name" name="name" type="text" value="{{ $user->name ?? old('name') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required autofocus autocomplete="name" />
+        <x-text-input id="name" name="name" type="text" value="{{ $user->name ?? old('name') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" autofocus autocomplete="name" />
         <x-input-error :messages="$errors->get('name')" class="mt-2" />
     </div>
 
     <!-- Email -->
     <div class="mt-4">
         <x-input-label for="email" :value="__('E-mail')" />
-        <x-text-input id="email" name="email" type="email" value="{{ $user->email ?? old('email') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required autocomplete="email" />
+        <x-text-input id="email" name="email" type="email" value="{{ $user->email ?? old('email') }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" autocomplete="email" />
         <x-input-error :messages="$errors->get('email')" class="mt-2" />
     </div>
 
@@ -24,7 +24,14 @@
     <!-- Avatar -->
     <div class="mt-4">
         <x-input-label for="avatar" :value="__('Avatar')" />
-        <input id="avatar" type="file" name="avatar" class="mt-1 block w-full">
+
+        @if (isset($user->avatar))
+            <div class="w-24 h-24 rounded-full overflow-hidden">
+                <img src="{{ asset('storage/' . $user->avatar) }}" alt="Current Avatar" class="w-full h-full object-cover">
+            </div>
+        @endif
+
+        <input id="avatar" type="file" name="avatar" class="mt-4 block w-full">
         <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
     </div>
 

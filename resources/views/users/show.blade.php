@@ -14,7 +14,7 @@
 
     @if ($user->avatar)
         <p class="text-gray-500 my-2">Avatar:</p>
-        <img src="{{ asset('storage/'.$user->avatar) }}" alt="{{ $user->name }}" class="my-2 w-32 h-32 object-cover rounded-full">
+        <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $user->name }}" class="my-2 w-32 h-32 object-cover rounded-full">
     @endif
 
     <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="mt-4 flex justify-between">
@@ -23,7 +23,7 @@
 
         <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded">Excluir</button>
 
-        <a href="{{ route('home') }}" class="text-blue-500">Voltar</a>
+        <a href="{{ route('users.index') }}" class="text-blue-500">Voltar</a>
     </form>
 </div>
 @endsection
