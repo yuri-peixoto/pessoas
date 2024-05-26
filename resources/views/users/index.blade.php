@@ -8,4 +8,7 @@
 
 @section('content')
     @include('users.partials.content', compact('users'))
+
+    {{-- Pagination links --}}
+    {{ $users->links() }}
 @endsection
