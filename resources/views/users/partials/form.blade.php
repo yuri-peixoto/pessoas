@@ -17,7 +17,7 @@
     <!-- Password -->
     <div class="mt-4">
         <x-input-label for="password" :value="__('Password')" />
-        <x-text-input id="password" name="password" type="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required autocomplete="new-password" />
+        <x-text-input id="password" name="password" type="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" autocomplete="new-password" />
         <x-input-error :messages="$errors->get('password')" class="mt-2" />
     </div>
 

@@ -8,13 +8,13 @@
 
 @section('content')
 <div class="bg-white shadow p-4">
-    <h2 class="text-xl font-bold">{{ $user->name }}</h2>
+    <h2 class="text-xl font-bold my-2">{{ $user->name }}</h2>
 
-    <p class="text-gray-500">Status: {{ $user->email }}</p>
+    <p class="text-gray-500">E-mail: {{ $user->email }}</p>
 
     @if ($user->avatar)
-        <p class="text-gray-500">Avatar:</p>
-        <img src="{{ asset('storage/'.$user->avatar) }}" alt="{{ $user->name }}" class="w-32 h-32 object-cover rounded-full">
+        <p class="text-gray-500 my-2">Avatar:</p>
+        <img src="{{ asset('storage/'.$user->avatar) }}" alt="{{ $user->name }}" class="my-2 w-32 h-32 object-cover rounded-full">
     @endif
 
     <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="mt-4 flex justify-between">
