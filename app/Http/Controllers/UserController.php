@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
 
         if ($request->hasFile('avatar')) {
             $avatar         = $request->file('avatar');
@@ -81,7 +81,7 @@ class UserController extends Controller
             return back();
         }
 
-        $data = $request->all();
+        $data = $request->validated();
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($data['password']);
