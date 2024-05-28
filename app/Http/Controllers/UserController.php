@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index(Request $request, User $user)
     {
-        $users = $user->paginate(3);
+        $paginationCount = $request->input('count', 3);
+
+        $users = $user->paginate($paginationCount);
 
         return view('users.index', compact('users'));
     }
@@ -35,15 +38,11 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        if ($request->hasFile('avatar')) {
-            $avatar         = $request->file('avatar');
-            $avatarPath     = $avatar->store('avatars', 'public');
-            $data['avatar'] = $avatarPath;
-        }
-
         $data['password'] = Hash::make($data['password']);
 
-        $user = User::create($data);
+        $user = User::create($data + [
+            'avatar' => $request->file('avatar')->store('avatars', 'public'),
+        ]);
 
         return redirect()->route('users.show', $user->id);
     }
@@ -53,9 +52,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        if (!$user = User::find($id)) {
-            return back();
-        }
+        $user = User::findOrFail($id);
 
         return view('users.show', compact('user'));
     }
@@ -65,9 +62,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        if (!$user = User::find($id)) {
-            return back();
-        }
+        $user = User::findOrFail($id);
 
         return view('users.edit', compact('user'));
     }
@@ -77,9 +72,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id)
     {
-        if (!$user = User::find($id)) {
-            return back();
-        }
+        $user = User::findOrFail($id);
 
         $data = $request->validated();
 
@@ -90,11 +83,10 @@ class UserController extends Controller
         }
 
         if ($request->hasFile('avatar')) {
-            $avatar         = $request->file('avatar');
-            $avatarPath     = $avatar->store('avatars', 'public');
-            $data['avatar'] = $avatarPath;
-        } else {
-            unset($data['avatar']);
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
 
         $user->update($data);
@@ -107,9 +99,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        if (!$user = User::find($id)) {
-            return back();
-        }
+        $user = User::findOrFail($id);
 
         $user->delete();
 
